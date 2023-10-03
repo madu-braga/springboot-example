@@ -1,5 +1,6 @@
 package br.gov.sp.fatec.app.service;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
@@ -24,12 +25,14 @@ public class TrabalhoService {
             if(trabalho == null ||
                     trabalho.getTitulo() == null ||
                     trabalho.getTitulo().isBlank() ||
-                    trabalho.getDataHoraEntrega() == null ||
+                    //trabalho.getDataHoraEntrega() == null ||
                     trabalho.getGrupo() == null || 
                     trabalho.getGrupo().isBlank()) {
                 throw new IllegalArgumentException("Dados inválidos!");
             }
-
+        if (trabalho.getDataHoraEntrega() == null) {
+                trabalho.setDataHoraEntrega(LocalDateTime.now());
+            }
             trabalho = trabalhoRepository.save(trabalho);
 
             return trabalho;
